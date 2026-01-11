@@ -11,6 +11,7 @@ const AVATAR_MAX_ID = 6;
 
 const COMMENTS_COUNT_SHIFT = 5;
 
+const ALERT_SHOW_TIME = 5000;
 
 const DESCRIPTIONS = [
   'Первое описание',
@@ -68,4 +69,5 @@ export {
   NAMES,
   MESSAGES,
   ERRORS,
+  ALERT_SHOW_TIME,
 };

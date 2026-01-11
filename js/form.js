@@ -1,4 +1,11 @@
 import { ERRORS } from './constants.js';
+import { sendData } from './api.js';
+import { showAlert } from './utils.js';
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикация...'
+};
 
 const createFormValidator = (formNode) => {
   const pristine = new Pristine(
@@ -79,12 +86,39 @@ const renderForm = () => {
   const body = document.querySelector('body');
   const form = document.querySelector('.img-upload__form');
   const closeButton = document.querySelector('.img-upload__cancel');
+  const submitButton = form.querySelector('.img-upload__submit');
 
   const pristine = createFormValidator(form);
 
+  const blockSubmitButton = () => {
+    submitButton.disabled = true;
+    submitButton.textContent = SubmitButtonText.SENDING;
+  };
+
+  const unblockSubmitButton = () => {
+    submitButton.disabled = false;
+    submitButton.textContent = SubmitButtonText.IDLE;
+  };
+
   form.addEventListener('submit', (event) => {
-    if (!pristine.validate()) {
-      event.preventDefault();
+    event.preventDefault();
+
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(new FormData(event.target))
+        .then(() => {
+          form.reset();
+          formModal.classList.add('hidden');
+          document.querySelector('body').classList.remove('modal-open');
+          input.value = '';
+        })
+        .catch(
+          (err) => {
+            showAlert(err.message);
+            //тут другое надо, убрать импорт тоже
+          }
+        )
+        .finally(unblockSubmitButton);
     }
   });
 

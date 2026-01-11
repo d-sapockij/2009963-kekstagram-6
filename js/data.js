@@ -1,3 +1,5 @@
+// Вспомогательный модуль для генерации данных до настройки работы с сервером
+
 import { getRandomCount, createIdGenerator } from './utils.js';
 import {
   PHOTOS_COUNT,

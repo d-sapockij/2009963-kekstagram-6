@@ -10,8 +10,7 @@ const createGallery = (data) => {
     if (e.target.hasAttribute('data-id') && e.target.classList.contains('picture__img')) {
       e.preventDefault();
       const targetId = e.target.dataset.id;
-      const targetDataArrIndex = targetId - 1;
-      const targetData = data[targetDataArrIndex];
+      const targetData = data[targetId];
       renderPopup(targetData);
     }
   });
